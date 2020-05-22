@@ -14,6 +14,12 @@ channelUpdate ${APP_CHANNEL} 1 0 Org1MSPanchors.tx
 echo_b "=== Updating anchor peers to peer0 for org2... ==="
 channelUpdate ${APP_CHANNEL} 2 0 Org2MSPanchors.tx
 
+echo_b "=== Updating anchor peers to peer0 for org3... ==="
+channelUpdate ${APP_CHANNEL} 3 0 Org3MSPanchors.tx
+
+echo_b "=== Updating anchor peers to peer0 for org4... ==="
+channelUpdate ${APP_CHANNEL} 4 0 Org4MSPanchors.tx
+
 echo_b "=== Updated anchor peers ==="
 
 echo

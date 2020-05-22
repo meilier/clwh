@@ -1,0 +1,196 @@
+{
+  "name": "sample-network",
+  "description": "Sample network contains 4 peers (2 orgs), 1 orderer and 2 cas for Python SDK testing",
+  "version": "0.1",
+  "client": {
+    "organization": "Org1",
+    "credentialStore": {
+      "path": "/tmp/hfc-kvs",
+      "cryptoStore": {
+        "path": "/tmp/hfc-cvs"
+      },
+      "wallet": "wallet-name"
+    }
+  },
+  "organizations": {
+    "orderer.example.com": {
+      "mspid": "OrdererMSP",
+      "orderers": [
+        "orderer.example.com"
+      ],
+      "certificateAuthorities": [
+        "ca-orderer"
+      ],
+      "users": {
+        "Admin": {
+          "cert": "/Users/xingweizheng/github/clwh/crypto-config/ordererOrganizations/example.com/users/Admin@example.com/msp/signcerts/Admin@example.com-cert.pem",
+          "private_key": "/Users/xingweizheng/github/clwh/crypto-config/ordererOrganizations/example.com/users/Admin@example.com/msp/keystore/f0dc92fbb0f0a1ce1bff8daba28433953283d9259106f6aa8a9a630fd29da9c7_sk"
+        }
+      }
+    },
+    "org1.example.com": {
+      "mspid": "Org1MSP",
+      "peers": [
+        "peer0.org1.example.com"
+      ],
+      "certificateAuthorities": [
+        "ca-org1"
+      ],
+      "users": {
+        "Admin": {
+          "cert": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem",
+          "private_key": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/17efffe1f17814956d7b9bbc366e53de5e71d38c09add0b8e316f27e3768e43f_sk"
+        },
+        "User1": {
+          "cert": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem",
+          "private_key": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org1.example.com/users/User1@org1.example.com/msp/keystore/42a9ccc1fa9a29e1a6864b8f5869302ccbde8a97a6df56d087e661fc13cb74f5_sk"
+        }
+      }
+    },
+    "org2.example.com": {
+      "mspid": "Org2MSP",
+      "peers": [
+        "peer0.org2.example.com"
+      ],
+      "certificateAuthorities": [
+        "ca-org2"
+      ],
+      "users": {
+        "Admin": {
+          "cert": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts/Admin@org2.example.com-cert.pem",
+          "private_key": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore/c1365ffba5a163483ad2d84232948c1856824360cf26caeb229f37845ea9df56_sk"
+        },
+        "User1": {
+          "cert": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp/signcerts/User1@org2.example.com-cert.pem",
+          "private_key": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org2.example.com/users/User1@org2.example.com/msp/keystore/0c1472861739d25b69de4faff31c17426717e55c2d0793d2215113fded7c78da_sk"
+        }
+      }
+    },
+    "org3.example.com": {
+      "mspid": "Org3MSP",
+      "peers": [
+        "peer0.org3.example.com"
+      ],
+      "certificateAuthorities": [
+        "ca-org3"
+      ],
+      "users": {
+        "Admin": {
+          "cert": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/signcerts/Admin@org3.example.com-cert.pem",
+          "private_key": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org3.example.com/users/Admin@org3.example.com/msp/keystore/bba5d732735ec13d26743d1560b3c99eb21683fb7722aa7f348580d9b0d70183_sk"
+        },
+        "User1": {
+          "cert": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org3.example.com/users/User1@org3.example.com/msp/signcerts/User1@org3.example.com-cert.pem",
+          "private_key": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org3.example.com/users/User1@org3.example.com/msp/keystore/2de6de720d4761bac3b3baf2fd65ecde486b7b94f81a454e847add77168b4e9e_sk"
+        }
+      }
+    },
+    "org4.example.com": {
+      "mspid": "Org4MSP",
+      "peers": [
+        "peer0.org4.example.com"
+      ],
+      "certificateAuthorities": [
+        "ca-org4"
+      ],
+      "users": {
+        "Admin": {
+          "cert": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org4.example.com/users/Admin@org4.example.com/msp/signcerts/Admin@org4.example.com-cert.pem",
+          "private_key": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org4.example.com/users/Admin@org4.example.com/msp/keystore/8cd6b6b648cc942c0faddb68cf6050cebd6cf92dbbd6f1b3e793277d3fe02824_sk"
+        },
+        "User1": {
+          "cert": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org4.example.com/users/User1@org4.example.com/msp/signcerts/User1@org4.example.com-cert.pem",
+          "private_key": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org4.example.com/users/User1@org4.example.com/msp/keystore/6810a30f092251927fc4a7773875b08354c77d294a8aa6033cebf34271e8f7e6_sk"
+        }
+      }
+    }
+  },
+  "orderers": {
+    "orderer.example.com": {
+      "url": "localhost:7050",
+      "grpcOptions": {
+        "grpc.ssl_target_name_override": "orderer.example.com",
+        "grpc-max-send-message-length": 15
+      },
+      "tlsCACerts": {
+        "path": "/Users/xingweizheng/github/clwh/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem"
+      }
+    }
+  },
+  "peers": {
+    "peer0.org1.example.com": {
+      "url": "localhost:7051",
+      "eventUrl": "localhost:7053",
+      "grpcOptions": {
+        "grpc.ssl_target_name_override": "peer0.org1.example.com",
+        "grpc.http2.keepalive_time": 15
+      },
+      "tlsCACerts": {
+        "path": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem"
+      }
+    },
+    "peer0.org2.example.com": {
+      "url": "localhost:7061",
+      "eventUrl": "localhost:7063",
+      "grpcOptions": {
+        "grpc.ssl_target_name_override": "peer0.org2.example.com"
+      },
+      "tlsCACerts": {
+        "path": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp/tlscacerts/tlsca.org2.example.com-cert.pem"
+      }
+    },
+    "peer0.org3.example.com": {
+      "url": "localhost:7071",
+      "eventUrl": "localhost:7073",
+      "grpcOptions": {
+        "grpc.ssl_target_name_override": "peer0.org3.example.com",
+        "grpc.http2.keepalive_time": 15
+      },
+      "tlsCACerts": {
+        "path": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/msp/tlscacerts/tlsca.org3.example.com-cert.pem"
+      }
+    },
+    "peer0.org4.example.com": {
+      "url": "localhost:7081",
+      "eventUrl": "localhost:7083",
+      "grpcOptions": {
+        "grpc.ssl_target_name_override": "peer0.org4.example.com"
+      },
+      "tlsCACerts": {
+        "path": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org4.example.com/peers/peer0.org4.example.com/msp/tlscacerts/tlsca.org4.example.com-cert.pem"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca-org1": {
+      "url": "https://localhost:7054",
+      "grpcOptions": {
+        "verify": true
+      },
+      "tlsCACerts": {
+        "path": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org1.example.com/ca/org1.example.com-cert.pem"
+      },
+      "registrar": [
+        {
+          "enrollId": "admin",
+          "enrollSecret": "adminpw"
+        }
+      ]
+    },
+    "ca-org2": {
+      "url": "https://localhost:8054",
+      "grpcOptions": {
+        "verify": true
+      },
+      "tlsCACerts": {
+        "path": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org2.example.com/ca/org2.example.com-cert.pem"
+      },
+      "registrar": [
+        {
+          "enrollId": "admin",
+          "enrollSecret": "adminpw"
+        }
+      ]
+    }
+  }
+}

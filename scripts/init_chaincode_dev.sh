@@ -13,7 +13,7 @@ fi
 
 echo
 echo " ============================================== "
-echo " ==========initialize businesschannel========== "
+echo " ==========initialize mychannel========== "
 echo " ============================================== "
 echo
 

@@ -89,6 +89,8 @@ start: # bootup the fabric network
 	@echo "Start a fabric network with ${COMPOSE_FILE}..."
 	@make clean
 	@docker-compose -f ${COMPOSE_FILE} up -d  # Start a fabric network
+	make test_channel_create
+	make test_channel_join
 
 stop: # stop the fabric network
 	@echo "Stop the fabric network with ${COMPOSE_FILE}..."
@@ -156,6 +158,10 @@ test_cc_instantiate: # Instantiate the chaincode
 test_cc_upgrade: # Upgrade the chaincode
 	@echo "Upgrade chaincode on the fabric network"
 	@docker exec -it fabric-cli bash -c "cd /tmp; bash scripts/test_cc_upgrade.sh"
+
+test_cc_query:
+	@echo "Invoke and query cc example02 on all peers"
+	@docker exec -it fabric-cli bash -c "cd /tmp; bash scripts/test_cc_query.sh"	
 
 test_cc_invoke_query: # test user chaincode on all peers
 	@echo "Invoke and query cc example02 on all peers"

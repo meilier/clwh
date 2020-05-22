@@ -97,11 +97,13 @@ FABRIC_CFG_PATH=/etc/hyperledger/fabric
 CHANNEL_ARTIFACTS=channel-artifacts
 CRYPTO_CONFIG=crypto-config
 ORDERER_GENESIS=orderer.genesis.block
-ORDERER_GENESIS_PROFILE=TwoOrgsOrdererGenesis
-APP_CHANNEL_PROFILE=TwoOrgsChannel
+ORDERER_GENESIS_PROFILE=FourOrgsOrdererGenesis
+APP_CHANNEL_PROFILE=FourOrgsChannel
 APP_CHANNEL_TX=${APP_CHANNEL}.tx
 UPDATE_ANCHOR_ORG1_TX=Org1MSPanchors.tx
 UPDATE_ANCHOR_ORG2_TX=Org2MSPanchors.tx
+UPDATE_ANCHOR_ORG3_TX=Org3MSPanchors.tx
+UPDATE_ANCHOR_ORG4_TX=Org4MSPanchors.tx
 
 # CONFIGTXLATOR
 CTL_IMG=yeasy/hyperledger-fabric:${FABRIC_IMG_TAG}
