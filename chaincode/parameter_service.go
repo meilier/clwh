@@ -48,6 +48,17 @@ type ParameterServiceInitial struct {
 	LearnRate      string `json:"learnrate"`
 }
 
+// type GradientData struct {
+// 	Number         string `json:"number"`
+// 	TrainBatchSize string `json:"trainbatchsize"`
+// 	TestBatchSize  string `json:"testbatchsize"`
+// 	LearnRate      string `json:"learnrate"`
+// }
+
+type map[string][][]int DataDict
+
+var m = make(map[string][][]int)
+
 /*
  * The Init method is called when the Smart Contract "fabcar" is instantiated by the blockchain network
  * Best practice is to have any Ledger initialization in separate function -- see initLedger()
@@ -91,6 +102,30 @@ func (s *SmartContract) getParameter(APIstub shim.ChaincodeStubInterface, args [
 
 	pmAsBytes, _ := APIstub.GetState(args[0])
 	return shim.Success(pmAsBytes)
+}
+
+// add gradient data
+func (s *SmartContract) addGradientData(APIstub shim.ChaincodeStubInterface, gd DataDict) sc.Response {
+
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+	gdAsBytes, _ := json.Marshal(gd)
+
+	APIstub.PutState(args[0],gdAsBytes)
+
+	return shim.Success(nil)
+}
+
+// get gradient data
+func (s *SmartContract) getGradientData(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	gdAsBytes, _ := APIstub.GetState(args[0])
+	return shim.Success(gdAsBytes)
 }
 
 // The main function is only relevant in unit test mode. Only included here for completeness.

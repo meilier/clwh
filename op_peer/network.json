@@ -110,7 +110,9 @@
       "url": "localhost:7050",
       "grpcOptions": {
         "grpc.ssl_target_name_override": "orderer.example.com",
-        "grpc-max-send-message-length": 15
+        "grpc.max_send_message_length": 104857600,
+        "grpc.max_receive_message_length": 104857600,
+        "grpc.http2.keepalive_time": 15
       },
       "tlsCACerts": {
         "path": "/Users/xingweizheng/github/clwh/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem"
@@ -123,7 +125,9 @@
       "eventUrl": "localhost:7053",
       "grpcOptions": {
         "grpc.ssl_target_name_override": "peer0.org1.example.com",
-        "grpc.http2.keepalive_time": 15
+        "grpc.max_send_message_length": 104857600,
+        "grpc.max_receive_message_length": 104857600,
+        "grpc.http2.keepalive_time": 30
       },
       "tlsCACerts": {
         "path": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp/tlscacerts/tlsca.org1.example.com-cert.pem"
@@ -133,7 +137,10 @@
       "url": "localhost:7061",
       "eventUrl": "localhost:7063",
       "grpcOptions": {
-        "grpc.ssl_target_name_override": "peer0.org2.example.com"
+        "grpc.ssl_target_name_override": "peer0.org2.example.com",
+        "grpc.max_send_message_length": 104857600,
+        "grpc.max_receive_message_length": 104857600,
+        "grpc.http2.keepalive_time": 30
       },
       "tlsCACerts": {
         "path": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/msp/tlscacerts/tlsca.org2.example.com-cert.pem"
@@ -144,7 +151,9 @@
       "eventUrl": "localhost:7073",
       "grpcOptions": {
         "grpc.ssl_target_name_override": "peer0.org3.example.com",
-        "grpc.http2.keepalive_time": 15
+        "grpc.max_send_message_length": 104857600,
+        "grpc.max_receive_message_length": 104857600,
+        "grpc.http2.keepalive_time": 30
       },
       "tlsCACerts": {
         "path": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/msp/tlscacerts/tlsca.org3.example.com-cert.pem"
@@ -154,7 +163,10 @@
       "url": "localhost:7081",
       "eventUrl": "localhost:7083",
       "grpcOptions": {
-        "grpc.ssl_target_name_override": "peer0.org4.example.com"
+        "grpc.ssl_target_name_override": "peer0.org4.example.com",
+        "grpc.max_send_message_length": 104857600,
+        "grpc.max_receive_message_length": 104857600,
+        "grpc.http2.keepalive_time": 30
       },
       "tlsCACerts": {
         "path": "/Users/xingweizheng/github/clwh/crypto-config/peerOrganizations/org4.example.com/peers/peer0.org4.example.com/msp/tlscacerts/tlsca.org4.example.com-cert.pem"

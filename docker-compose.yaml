@@ -1,0 +1,45 @@
+version: "3"
+
+services: 
+    ps_server:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        image: wzx/clwh-base:latest
+        ports: 
+            - "8800:8800"
+        volumes: 
+            - /tmp/share/:/tmp/share
+        network_mode: "host"
+        command: 
+            python3 /Users/xingweizheng/github/clwh/control_server.py
+    
+    peer_1:
+        image: wzx/clwh-base:latest
+        ports: 
+            - "8801:8801"
+            - "8811:8811"
+        depends_on: 
+            - ps_server
+        volumes: 
+            - /tmp/share/:/tmp/share
+        network_mode: "host"
+        command: 
+            bash -c "sleep 2 ; python3 /Users/xingweizheng/github/clwh/control_peer.py 0 8801 8811"
+        
+    peer_2:
+        image: wzx/clwh-base:latest
+        ports: 
+            - "8802:8802"
+            - "8812:8812"
+        depends_on: 
+            - ps_server
+        volumes: 
+            - /tmp/share/:/tmp/share
+        network_mode: "host"
+        command: 
+            bash -c "sleep 2 ; python3 /Users/xingweizheng/github/clwh/control_peer.py 1 8802 8812"
+
+
+    
+    

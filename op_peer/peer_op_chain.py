@@ -1,12 +1,36 @@
 import asyncio
 from hfc.fabric import Client
+import torch
+import os
+import json
+import numpy as np
 
 loop = asyncio.get_event_loop()
 
 orgs = ["org1.example.com", "org2.example.com", "org3.example.com", "org4.example.com"]
 
 cli = Client(net_profile="/Users/xingweizheng/github/clwh/op_peer/network.json")
-org1_admin = cli.get_user('org1.example.com', 'Admin')
+org2_admin = cli.get_user('org2.example.com', 'Admin')
+
+# print("org have:", cli.get_net_info('organizations'))
+# orgs = list(cli.get_net_info('organizations').keys())[1:]
+# for name in orgs:
+#     print("name is:",name)
+# print(cli._organizations)
+# exit(0)
+
+empty_dict = torch.load("/Users/xingweizheng/github/clwh/mnist-6000-1000-base.pth")
+
+dict_name = ['fc.0.weight','fc.2.weight','fc.4.weight','fc.6.weight','fc.0.bias','fc.2.bias','fc.4.bias','fc.6.bias']
+
+
+# for name in dict_name:
+#     empty_dict[name] = empty_dict[name].tolist()
+
+
+# args = ['a', json.dumps(empty_dict)]
+# print("he")
+# exit(0)
 
 # Make the client know there is a channel in the network
 cli.new_channel('mychannel')
@@ -16,7 +40,7 @@ cli.new_channel('mychannel')
 import os
 gopath_bak = os.environ.get('GOPATH', '')
 gopath = os.path.normpath(os.path.join(
-                      os.path.dirname(os.path.realpath('__file__')),
+                      "/Users/xingweizheng/github/clwh/op_peer/",
                       'chaincode'
                      ))
 os.environ['GOPATH'] = os.path.abspath(gopath)
@@ -27,18 +51,18 @@ for org in orgs:
     responses = loop.run_until_complete(cli.chaincode_install(
                 requestor=org_admin,
                 peers=['peer0.' + org],
-                cc_path='github.com/example_cc',
-                cc_name='example_cc',
+                cc_path='github.com/psc_cc',
+                cc_name='psc_cc',
                 cc_version='v1.0'
                 ))
 
 # Instantiate Chaincode in Channel, the response should be true if succeed
-args = ['a', '200', 'b', '300']
+args = ['ParameterInitial','10','32','16','0.01']
 
 # policy, see https://hyperledger-fabric.readthedocs.io/en/release-1.4/endorsement-policies.html
 policy = {
     'identities': [
-        {'role': {'name': 'member', 'mspId': 'Org1MSP'}},
+        {'role': {'name': 'member', 'mspId': 'org1MSP'}},
         {'role': {'name': 'member', 'mspId': 'Org2MSP'}},
         {'role': {'name': 'member', 'mspId': 'Org3MSP'}},
         {'role': {'name': 'member', 'mspId': 'Org4MSP'}},
@@ -53,11 +77,11 @@ policy = {
     }
 }
 response = loop.run_until_complete(cli.chaincode_instantiate(
-               requestor=org1_admin,
+               requestor=org2_admin,
                channel_name='mychannel',
-               peers=['peer0.org1.example.com'],
+               peers=['peer0.org2.example.com'],
                args=args,
-               cc_name='example_cc',
+               cc_name='psc_cc',
                cc_version='v1.0',
                cc_endorsement_policy=policy, # optional, but recommended
                collections_config=None, # optional, for private data policy
@@ -65,28 +89,56 @@ response = loop.run_until_complete(cli.chaincode_instantiate(
                wait_for_event=True # optional, for being sure chaincode is instantiated
                ))
 
-# Invoke a chaincode
-args = ['a', 'b', '100']
+
+# Query a chaincode
+args = ['ParameterInitial']
 # The response should be true if succeed
-response = loop.run_until_complete(cli.chaincode_invoke(
-               requestor=org1_admin,
+
+response = loop.run_until_complete(cli.chaincode_query(
+               requestor=org2_admin,
                channel_name='mychannel',
-               peers=['peer0.org1.example.com'],
+               peers=['peer0.org2.example.com'],
                args=args,
-               cc_name='example_cc',
+               cc_name='psc_cc',
+               fcn='getParameter'
+               ))
+
+print("response main is :", response)
+# Invoke a chaincode
+
+for name in dict_name:
+    empty_dict[name] = empty_dict[name].tolist()
+
+gd = json.dumps(empty_dict)
+
+li = [i for i in range(100000)]
+args = ['a', gd]
+# The response should be true if succeed
+print("**********start************")
+response = loop.run_until_complete(cli.chaincode_invoke(
+               requestor=org2_admin,
+               channel_name='mychannel',
+               peers=['peer0.org2.example.com'],
+               args=args,
+               cc_name='psc_cc',
+               fcn='addGradientData',
                transient_map=None, # optional, for private data
                wait_for_event=True, # for being sure chaincode invocation has been commited in the ledger, default is on tx event
                #cc_pattern='^invoked*' # if you want to wait for chaincode event and you have a `stub.SetEvent("invoked", value)` in your chaincode
                ))
-
+print("**********over************")
 # Query a chaincode
-args = ['b']
-# The response should be true if succeed
-response = loop.run_until_complete(cli.chaincode_query(
-               requestor=org1_admin,
-               channel_name='mychannel',
-               peers=['peer0.org1.example.com'],
-               args=args,
-               cc_name='example_cc'
-               ))
+# args = ['a']
+# # The response should be true if succeed
+# response = loop.run_until_complete(cli.chaincode_query(
+#                requestor=org2_admin,
+#                channel_name='mychannel',
+#                peers=['peer0.org2.example.com'],
+#                args=args,
+#                cc_name='psc_cc',
+#                fcn='getGradientData'
+#                ))
+
+
+
             

@@ -82,6 +82,7 @@ CC_MARBLES_COLLECTION_CONFIG_NEW="/go/src/examples/chaincode/go/marbles02_privat
 
 # unique chaincode params
 CC_NAME=${CC_02_NAME}
+MY_CC_NAME="psc_cc"
 CC_PATH=${CC_02_PATH}
 CC_INIT_ARGS=${CC_02_INIT_ARGS}
 CC_INIT_VERSION=1.0
@@ -89,6 +90,9 @@ CC_UPGRADE_ARGS=${CC_02_UPGRADE_ARGS}
 CC_UPGRADE_VERSION=1.1
 CC_INVOKE_ARGS=${CC_02_INVOKE_ARGS}
 CC_QUERY_ARGS=${CC_02_QUERY_ARGS}
+MY_CC_QUERY_ARGS='{"Args":["getParameter","ParameterInitial"]}'
+D_CC_QUERY_ARGS='{"Args":["getGradientData","send1001b"]}'
+
 
 # Generate configs
 GEN_IMG=yeasy/hyperledger-fabric:${FABRIC_IMG_TAG}  # working dir is `/go/src/github.com/hyperledger/fabric`

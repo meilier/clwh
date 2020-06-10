@@ -18,14 +18,14 @@ version: '2' # compose v3 still doesn't support `extends`, shame!
 
 services:
   ca-base:
-    image: yeasy/hyperledger-fabric-ca:1.2.0
+    image: yeasy/hyperledger-fabric-ca:1.4.6
     restart: always
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_TLS_ENABLED=true # change to false to disable TLS
 
   orderer-base:
-    image: yeasy/hyperledger-fabric-orderer:1.2.0
+    image: yeasy/hyperledger-fabric-orderer:1.4.6
     restart: always
     # Default config can be found at https://github.com/hyperledger/fabric/blob/master/orderer/common/localconfig/config.go
     environment:
@@ -40,7 +40,7 @@ services:
       #- ORDERER_GENERAL_LEDGERTYPE=json  # default: file
       - ORDERER_GENERAL_BATCHTIMEOUT=1s
       - ORDERER_GENERAL_MAXMESSAGECOUNT=10
-      - ORDERER_GENERAL_MAXWINDOWSIZE=1000
+      - ORDERER_GENERAL_MAXWINDOWSIZE=100000
       - ORDERER_GENERAL_LISTENPORT=7050
      #- ORDERER_RAMLEDGER_HISTORY_SIZE=100  #only useful when use ram ledger
       # enabled TLS
@@ -56,7 +56,7 @@ services:
     command: orderer start
 
   peer-base: # abstract base for fabric-peer, will be used in peer.yaml
-    image: yeasy/hyperledger-fabric-peer:1.2.0
+    image: yeasy/hyperledger-fabric-peer:1.4.6
     restart: always
     environment:
       - CORE_PEER_ADDRESSAUTODETECT=false
@@ -87,7 +87,7 @@ services:
     command: peer node start
 
   cli-base:
-    image: yeasy/hyperledger-fabric:1.2.0
+    image: yeasy/hyperledger-fabric:1.4.6
     restart: always
     tty: true
     environment:
@@ -99,7 +99,7 @@ services:
     command: bash -c 'cd /tmp; source scripts/func.sh; while true; do sleep 20170504; done'
 
   event-listener-base:
-    image: yeasy/hyperledger-fabric:1.2.0
+    image: yeasy/hyperledger-fabric:1.4.6
     restart: always
     tty: true
     environment:

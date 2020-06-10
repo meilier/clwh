@@ -50,33 +50,33 @@ services:
       service: peer0.org4.example.com
 
 
-  explorer:
-    extends:
-      file: base.yaml
-      service: explorer-base
-    container_name: explorer
-    hostname: explorer
-    depends_on:
-      - mysql
-    volumes:
-      - ./explorer-artifacts/config.json:/blockchain-explorer/config.json
-      - ./crypto-config:/blockchain-explorer/first-network/crypto-config
-    ports:
-      - "8080:8080"  # HTTP port
+  # explorer:
+  #   extends:
+  #     file: base.yaml
+  #     service: explorer-base
+  #   container_name: explorer
+  #   hostname: explorer
+  #   depends_on:
+  #     - mysql
+  #   volumes:
+  #     - ./explorer-artifacts/config.json:/blockchain-explorer/config.json
+  #     - ./crypto-config:/blockchain-explorer/first-network/crypto-config
+  #   ports:
+  #     - "8080:8080"  # HTTP port
 
-  mysql: # mysql service
-    extends:
-      file: base.yaml
-      service: mysql-base
-    container_name: mysql
-    hostname: mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=fabricexplorer
-    volumes:
-      - ./explorer-artifacts/fabricexplorer.sql:/docker-entrypoint-initdb.d/fabricexplorer.sql
-    ports:
-      - "3306:3306"  # HTTP port
+  # mysql: # mysql service
+  #   extends:
+  #     file: base.yaml
+  #     service: mysql-base
+  #   container_name: mysql
+  #   hostname: mysql
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=root
+  #     - MYSQL_DATABASE=fabricexplorer
+  #   volumes:
+  #     - ./explorer-artifacts/fabricexplorer.sql:/docker-entrypoint-initdb.d/fabricexplorer.sql
+  #   ports:
+  #     - "3306:3306"  # HTTP port
     #command: bash -c 'mysqld; sleep 1; mysql -uroot -proot < /tmp/fabricexplorer.sql; while true; do sleep 20171117; done'
 
 #networks:

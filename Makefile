@@ -17,6 +17,9 @@ COMPOSE_FILE ?= "docker-compose-4orgs-4peers-solo-be.yaml"
 
 LOG_PATH ?= solo/logs
 
+
+
+
 ifeq ($(HLF_MODE),kafka)
 	COMPOSE_FILE="docker-compose-2orgs-4peers-kafka.yaml"
 	LOG_PATH=kafka/logs
@@ -87,14 +90,15 @@ restart: stop start
 
 start: # bootup the fabric network
 	@echo "Start a fabric network with ${COMPOSE_FILE}..."
-	@make clean
 	@docker-compose -f ${COMPOSE_FILE} up -d  # Start a fabric network
 	make test_channel_create
 	make test_channel_join
+	make update_anchors
 
 stop: # stop the fabric network
 	@echo "Stop the fabric network with ${COMPOSE_FILE}..."
 	@docker-compose -f ${COMPOSE_FILE} down >& /tmp/docker-compose.log
+	@make clean_container_and_images
 
 chaincode_dev: restart chaincode_init test_cc_peer0 stop
 
@@ -155,13 +159,21 @@ test_cc_instantiate: # Instantiate the chaincode
 	@echo "Instantiate chaincode on the fabric network"
 	@docker exec -it fabric-cli bash -c "cd /tmp; bash scripts/test_cc_instantiate.sh"
 
+test_psc_cc_instantiate: # Instantiate the chaincode
+	@echo "Instantiate chaincode on the fabric network"
+	@docker exec -it fabric-cli bash -c "cd /tmp; bash scripts/test_psc_cc_instantiate.sh"
+
 test_cc_upgrade: # Upgrade the chaincode
 	@echo "Upgrade chaincode on the fabric network"
 	@docker exec -it fabric-cli bash -c "cd /tmp; bash scripts/test_cc_upgrade.sh"
 
-test_cc_query:
+test_psc_gradient_query:
 	@echo "Invoke and query cc example02 on all peers"
-	@docker exec -it fabric-cli bash -c "cd /tmp; bash scripts/test_cc_query.sh"	
+	@docker exec -it fabric-cli bash -c "cd /tmp; bash scripts/test_psc_gradient_query.sh"	
+
+test_psc_parameter_query:
+	@echo "Invoke and query cc my on all peers"
+	@docker exec -it fabric-cli bash -c "cd /tmp; bash scripts/test_psc_parameter_query.sh"
 
 test_cc_invoke_query: # test user chaincode on all peers
 	@echo "Invoke and query cc example02 on all peers"
@@ -207,6 +219,10 @@ clean: # clean up containers
 	@-docker ps -a | awk '$$2 ~ /dev-peer/ { print $$1 }' | xargs -r -I {} docker rm -f {}
 	@-docker images | awk '$$1 ~ /dev-peer/ { print $$3 }' | xargs -r -I {} docker rmi -f {}
 	echo "May manually clean the crypto-config and $(MODE)/channel-artifacts"
+
+clean_container_and_images:
+	-docker container rm $(shell docker ps -aq)
+	-docker rmi $(shell docker images|grep dev-peer)
 
 clean_config: clean_channel_artifacts clean_crypto_config
 
